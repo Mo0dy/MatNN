@@ -2,22 +2,34 @@ from MatNN.NN import *
 from MatNN.GeneticAlgorithm import *
 
 
-test_inputs = np.array([1, 2, 3, 4])
-test_outputs = np.array([-1, 0.5])
+def test_function(inputs):
+    if np.sum(inputs) > 3:
+        return 1
+    else:
+        return 0
+
+
+max_cost = 2
+
 
 NN_AMOUNT = 100
 
 gen_alg = GeneticAlgorithm()
-nns = [NN(4, 5, 5, 2) for i in range(NN_AMOUNT)]
+nns = [NN(6, 20, 2, 1) for i in range(NN_AMOUNT)]
 
 while True:
+    inputs = np.random.rand(6)
+    test_outputs = test_function(inputs)
+
     # calculate nns and store results
-    results = [n.calculate(test_inputs) for n in nns]
+    results = [n.calculate(inputs) for n in nns]
     # calculate fitness
     results = np.array(results)
-    dist = results[:] - test_outputs
-    cost = np.sum(np.abs(dist), axis=1)
-    fitness = np.max(cost) - cost
+    dist = np.abs(results[:] - test_outputs)
+    cost = np.sum(dist, axis=1)
+    fitness = max_cost - cost
+
+    print(np.sum(fitness))
 
     # export chromosomes
     pop = np.array([n.export_genome() for n in nns])

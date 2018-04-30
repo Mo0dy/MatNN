@@ -4,15 +4,14 @@ import numpy as np
 class GeneticAlgorithm(object):
     def __init__(self, mutation_rate=0.1, mutation_changse=0.01, recombination_amount=0.1):
         # the maximum stepsize in any direction
-        self.m_rate = mutation_rate
+        self.m_amount = mutation_rate
         self.m_changse = mutation_changse
         self.r_amount = recombination_amount
-
 
     def mutate(self, population):
         mutation_matrix = np.random.rand(population.shape[0], population.shape[1]) < self.m_changse
         ran_num = np.sum(mutation_matrix)
-        population[mutation_matrix] += (np.random.rand(ran_num) - 0.5) * (self.m_rate * 2)
+        population[mutation_matrix] += (np.random.rand(ran_num) - 0.5) * (self.m_amount * 2)
 
     def recombine(self, population, fitness):
         # stochastic universal sampling (select all parents at once with a change proportional to their fitness)

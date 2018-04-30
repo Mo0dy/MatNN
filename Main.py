@@ -29,8 +29,6 @@ while True:
     cost = np.sum(dist, axis=1)
     fitness = max_cost - cost
 
-    print(np.sum(fitness))
-
     # export chromosomes
     pop = np.array([n.export_genome() for n in nns])
 
